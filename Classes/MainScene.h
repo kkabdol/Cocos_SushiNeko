@@ -30,6 +30,7 @@ public:
 
 protected:
 	void setupTouchHandling();
+	void setupKeyboardHandling();
 	void onEnter() override;
 	void update( float dt ) override;
 
