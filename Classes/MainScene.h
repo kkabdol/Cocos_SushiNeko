@@ -54,6 +54,7 @@ private:
 	Side lastObstacleSide;
 	int pieceIndex;
 	GameState gameState;
+	bool isAnimatingGameOver;
 
 	cocos2d::ui::Text* scoreLabel;
 	int score;

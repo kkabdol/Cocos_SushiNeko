@@ -72,6 +72,7 @@ bool MainScene::init()
 
 	this->pieceIndex = 0;
 	this->gameState = GameState::Title;
+	this->isAnimatingGameOver = false;
 
 	this->scoreLabel = rootNode->getChildByName<cocos2d::ui::Text*>( "scoreLabel" );
 
@@ -136,8 +137,11 @@ void MainScene::setupTouchHandling()
 				break;
 
 			case GameState::GameOver:
-				this->resetGameState();
-				this->triggerReady();
+				if( !this->isAnimatingGameOver )
+				{
+					this->resetGameState();
+					this->triggerReady();
+				}
 				break;
 		}
 
@@ -198,8 +202,11 @@ void MainScene::setupKeyboardHandling()
 				break;
 
 			case GameState::GameOver:
-				this->resetGameState();
-				this->triggerReady();
+				if( !this->isAnimatingGameOver )
+				{
+					this->resetGameState();
+					this->triggerReady();
+				}
 				break;
 		}
 
@@ -340,6 +347,30 @@ void MainScene::triggerReady()
 void MainScene::triggerGameOver()
 {
 	this->gameState = GameState::GameOver;
+
+	// get a reference to the top-most node
+	auto scene = this->getChildByName( "Scene" );
+
+	// get a reference to the mat sprite
+	auto mat = scene->getChildByName( "mat" );
+
+	// get areference to the game over score label
+	cocos2d::ui::Text* gameOverScoreLabel = mat->getChildByName<cocos2d::ui::Text*>( "gameOverScoreLabel" );
+
+	// set the score label to the user's score
+	gameOverScoreLabel->setString( std::to_string( this->score ) );
+
+	// load and run the game over animation	
+	cocostudio::timeline::ActionTimeline* gameOverTimeline = CSLoader::createTimeline( "MainScene.csb" );
+	this->stopAllActions();
+	this->runAction( gameOverTimeline );
+	gameOverTimeline->play( "gameOver", false );
+
+	this->isAnimatingGameOver = true;
+	gameOverTimeline->setLastFrameCallFunc( [ this ]() {
+		this->isAnimatingGameOver = false;
+	} );
+
 }
 
 void MainScene::triggerPlaying()

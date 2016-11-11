@@ -2,7 +2,7 @@
   <PropertyGroup Type="Scene" Name="MainScene" ID="a2ee0952-26b5-49ae-8bf9-4f1d6279b798" Version="2.3.2.3" />
   <Content ctype="GameProjectContent">
     <Content>
-      <Animation Duration="90" Speed="1.0000" ActivedAnimationName="ready">
+      <Animation Duration="158" Speed="1.0000" ActivedAnimationName="gameOver">
         <Timeline ActionTag="-349474558" Property="VisibleForFrame">
           <BoolFrame FrameIndex="1" Tween="False" Value="False" />
         </Timeline>
@@ -46,13 +46,38 @@
           <BoolFrame FrameIndex="1" Tween="False" Value="False" />
           <BoolFrame FrameIndex="61" Tween="False" Value="True" />
         </Timeline>
+        <Timeline ActionTag="-1204872231" Property="Position">
+          <PointFrame FrameIndex="121" X="320.0000" Y="1920.0000">
+            <EasingData Type="0" />
+          </PointFrame>
+          <PointFrame FrameIndex="150" X="320.0000" Y="960.0000">
+            <EasingData Type="0" />
+          </PointFrame>
+          <PointFrame FrameIndex="154" X="320.0000" Y="1056.0000">
+            <EasingData Type="0" />
+          </PointFrame>
+          <PointFrame FrameIndex="158" X="320.0000" Y="960.0000">
+            <EasingData Type="0" />
+          </PointFrame>
+        </Timeline>
+        <Timeline ActionTag="-1204872231" Property="VisibleForFrame">
+          <BoolFrame FrameIndex="0" Tween="False" Value="False" />
+          <BoolFrame FrameIndex="121" Tween="False" Value="True" />
+        </Timeline>
+        <Timeline ActionTag="-2116701578" Property="VisibleForFrame">
+          <BoolFrame FrameIndex="0" Tween="False" Value="False" />
+          <BoolFrame FrameIndex="121" Tween="False" Value="True" />
+        </Timeline>
       </Animation>
       <AnimationList>
         <AnimationInfo Name="title" StartIndex="1" EndIndex="55">
-          <RenderColor A="150" R="25" G="25" B="112" />
+          <RenderColor A="255" R="25" G="25" B="112" />
         </AnimationInfo>
         <AnimationInfo Name="ready" StartIndex="61" EndIndex="120">
-          <RenderColor A="150" R="0" G="255" B="127" />
+          <RenderColor A="255" R="0" G="255" B="127" />
+        </AnimationInfo>
+        <AnimationInfo Name="gameOver" StartIndex="121" EndIndex="158">
+          <RenderColor A="150" R="186" G="85" B="211" />
         </AnimationInfo>
       </AnimationList>
       <ObjectData Name="Scene" ctype="GameNodeObjectData">
@@ -180,6 +205,65 @@
             <PrePosition X="1.0000" Y="0.0875" />
             <PreSize X="0.0000" Y="0.0000" />
             <FileData Type="Normal" Path="Assets/Images/resources-2x/tap_right.png" Plist="" />
+            <BlendFunc Src="770" Dst="771" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="mat" ActionTag="-1204872231" Tag="29" IconVisible="False" HorizontalEdge="BothEdge" VerticalEdge="BothEdge" LeftMargin="-64.0000" RightMargin="-64.0000" BottomMargin="-176.0000" ctype="SpriteObjectData">
+            <Size X="768.0000" Y="1136.0000" />
+            <Children>
+              <AbstractNodeData Name="gameOver_5" ActionTag="1581212701" Tag="30" IconVisible="False" HorizontalEdge="BothEdge" VerticalEdge="BothEdge" LeftMargin="152.5000" RightMargin="152.5000" TopMargin="113.6000" BottomMargin="728.4000" ctype="SpriteObjectData">
+                <Size X="463.0000" Y="294.0000" />
+                <AnchorPoint ScaleX="0.5000" ScaleY="1.0000" />
+                <Position X="384.0000" Y="1022.4000" />
+                <Scale ScaleX="1.0000" ScaleY="1.0000" />
+                <CColor A="255" R="255" G="255" B="255" />
+                <PrePosition X="0.5000" Y="0.9000" />
+                <PreSize X="0.0000" Y="0.0000" />
+                <FileData Type="Normal" Path="Assets/Images/resources-2x/gameOver.png" Plist="" />
+                <BlendFunc Src="770" Dst="771" />
+              </AbstractNodeData>
+              <AbstractNodeData Name="gameOverScore" ActionTag="1428933521" Tag="31" IconVisible="False" HorizontalEdge="BothEdge" VerticalEdge="BothEdge" LeftMargin="239.0000" RightMargin="239.0000" TopMargin="487.7800" BottomMargin="533.2200" FontSize="100" LabelText="Score" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="TextObjectData">
+                <Size X="290.0000" Y="115.0000" />
+                <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+                <Position X="384.0000" Y="590.7200" />
+                <Scale ScaleX="1.0000" ScaleY="1.0000" />
+                <CColor A="255" R="255" G="255" B="255" />
+                <PrePosition X="0.5000" Y="0.5200" />
+                <PreSize X="0.3776" Y="0.1012" />
+                <FontResource Type="Normal" Path="Assets/Fonts/Game of Three.ttf" Plist="" />
+                <OutlineColor A="255" R="255" G="0" B="0" />
+                <ShadowColor A="255" R="110" G="110" B="110" />
+              </AbstractNodeData>
+              <AbstractNodeData Name="gameOverScoreLabel" ActionTag="1860155231" Tag="32" IconVisible="False" HorizontalEdge="BothEdge" VerticalEdge="BothEdge" LeftMargin="357.0000" RightMargin="357.0000" TopMargin="578.6600" BottomMargin="442.3400" FontSize="100" LabelText="0&#xA;" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="TextObjectData">
+                <Size X="54.0000" Y="115.0000" />
+                <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+                <Position X="384.0000" Y="499.8400" />
+                <Scale ScaleX="1.0000" ScaleY="1.0000" />
+                <CColor A="255" R="255" G="255" B="255" />
+                <PrePosition X="0.5000" Y="0.4400" />
+                <PreSize X="0.0703" Y="0.1012" />
+                <FontResource Type="Normal" Path="Assets/Fonts/Game of Three.ttf" Plist="" />
+                <OutlineColor A="255" R="255" G="0" B="0" />
+                <ShadowColor A="255" R="110" G="110" B="110" />
+              </AbstractNodeData>
+            </Children>
+            <AnchorPoint ScaleX="0.5000" ScaleY="1.0000" />
+            <Position X="320.0000" Y="960.0000" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.5000" Y="1.0000" />
+            <PreSize X="1.2000" Y="1.1833" />
+            <FileData Type="Normal" Path="Assets/Images/resources-2x/mat.png" Plist="" />
+            <BlendFunc Src="770" Dst="771" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="play" ActionTag="-2116701578" Tag="33" IconVisible="False" HorizontalEdge="BothEdge" VerticalEdge="BothEdge" LeftMargin="218.5000" RightMargin="218.5000" TopMargin="813.0000" BottomMargin="21.0000" ctype="SpriteObjectData">
+            <Size X="203.0000" Y="126.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="320.0000" Y="84.0000" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.5000" Y="0.0875" />
+            <PreSize X="0.0000" Y="0.0000" />
+            <FileData Type="Normal" Path="Assets/Images/resources-2x/button.png" Plist="" />
             <BlendFunc Src="770" Dst="771" />
           </AbstractNodeData>
         </Children>
