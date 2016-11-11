@@ -147,11 +147,74 @@ void MainScene::setupTouchHandling()
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority( touchListener, this );
 }
 
+void MainScene::setupKeyboardHandling()
+{
+	auto keyboardListener = EventListenerKeyboard::create();
+	keyboardListener->onKeyPressed = [ & ]( EventKeyboard::KeyCode keyCode, Event* event )
+	{
+		switch( this->gameState )
+		{
+			case GameState::Title:
+				this->triggerReady();
+				break;
+
+			case GameState::Ready:
+				this->triggerPlaying();
+				// fall through
+
+			case GameState::Playing:
+				{
+					if( keyCode == EventKeyboard::KeyCode::KEY_LEFT_ARROW )
+					{
+						this->character->setSide( Side::Left );
+					}
+					else if( keyCode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW )
+					{
+						this->character->setSide( Side::Right );
+					}
+					else
+					{
+						return true;
+					}
+
+					if( isGameOver() )
+					{
+						triggerGameOver();
+						return true;
+					}
+
+					this->stepTower();
+					this->character->runChopAnimation();
+
+					if( isGameOver() )
+					{
+						triggerGameOver();
+						return true;
+					}
+
+					setScore( this->score + 1 );
+					setTimeLeft( this->timeLeft + cBonusTimeLeft );
+				}
+				break;
+
+			case GameState::GameOver:
+				this->resetGameState();
+				this->triggerReady();
+				break;
+		}
+
+		return true;
+	};
+
+	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority( keyboardListener, this );
+}
+
 void MainScene::onEnter()
 {
 	Layer::onEnter();
 
 	this->setupTouchHandling();
+	this->setupKeyboardHandling();
 	this->triggerTitle();
 	this->scheduleUpdate();
 }
