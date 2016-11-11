@@ -47,6 +47,7 @@ private:
 	void resetGameState();
 	void setScore( int score );
 	void setTimeLeft( float timeLeft );
+	void animateHitPiece( Side obstacleSide );
 
 	cocos2d::Node* pieceNode;
 	cocos2d::Vector<Piece*> pieces;
@@ -59,6 +60,8 @@ private:
 
 	cocos2d::Sprite* timeBar;
 	float timeLeft;
+
+	cocos2d::Vec2 flyingPiecePosition;
 };
 
 #endif // __MAINSCENE_SCENE_H__

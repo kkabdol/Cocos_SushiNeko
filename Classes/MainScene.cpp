@@ -217,6 +217,8 @@ void MainScene::onEnter()
 	this->setupKeyboardHandling();
 	this->triggerTitle();
 	this->scheduleUpdate();
+
+	this->flyingPiecePosition = this->pieceNode->getPosition();
 }
 
 void MainScene::update( float dt )
@@ -282,6 +284,8 @@ void MainScene::stepTower()
 	// 1. Grab a pointer to the currentPiece from the pieces array.
 	Piece* currentPiece = this->pieces.at( this->pieceIndex );
 
+	animateHitPiece( currentPiece->getObstacleSide() );
+
 	// 2. Move currentPiece to top of tower
 	currentPiece->setPosition( currentPiece->getPosition() + Vec2( 0.0f, currentPiece->getSpriteHeight() / 2.0f * cNumberOfSuchi ) );
 
@@ -293,7 +297,8 @@ void MainScene::stepTower()
 	currentPiece->setObstacleSide( this->lastObstacleSide );
 
 	// 5. Move piecesNode down by the height of a piece
-	this->pieceNode->setPosition( this->pieceNode->getPosition() - Vec2( 0.0f, currentPiece->getSpriteHeight() / 2.0f ) );
+	cocos2d::MoveBy* moveAction = cocos2d::MoveBy::create( 0.15f, Vec2( 0.0f, -currentPiece->getSpriteHeight() / 2.0f ) );
+	this->pieceNode->runAction( moveAction );
 
 	// 6. Increment pieceIndex
 	this->pieceIndex = ( this->pieceIndex + 1 ) % cNumberOfSuchi;
@@ -383,4 +388,37 @@ void MainScene::setTimeLeft( float timeLeft )
 	this->timeLeft = clampf( timeLeft, 0, cTimeLeftCap );
 
 	this->timeBar->setScaleX( timeLeft / cTimeLeftCap );
+}
+
+void MainScene::animateHitPiece( Side obstacleSide )
+{
+	// 1. Create a new piece called flyingPiece
+	Piece* flyingPiece = dynamic_cast< Piece* >( CSLoader::createNode( "Piece.csb" ) );
+
+	// 2. Set the obstacle on the correct side
+	flyingPiece->setObstacleSide( obstacleSide );
+
+	// 3. Set the position of the flyingPiece so that it looks like it's flying from the correct place
+	flyingPiece->setPosition( this->flyingPiecePosition );
+
+	// 4. Add flyingPiece to the scene
+	this->addChild( flyingPiece );
+
+	// 5. Create a new ActionTimeLine from "Piece.csb" called pieceTimeline
+	cocostudio::timeline::ActionTimeline* pieceTimeline = CSLoader::createTimeline( "Piece.csb" );
+	
+	// 6. Figure out, based on the Side the character is on, whether or not the piece should fly to the right or left
+	Side characterSide = character->getSide();
+	std::string animationName = ( characterSide == Side::Left ) ? std::string( "moveRight" ) : std::string( "moveLeft" );
+
+	// 7. Have flyingPiece run pieceTimeLine
+	flyingPiece->runAction( pieceTimeline );
+
+	// 8. Tell the pieceTimeline to play the correct animation
+	pieceTimeline->play( animationName, false );
+
+	// 9. on the last frame of the animation, remove the piece from the scene
+	pieceTimeline->setLastFrameCallFunc( [ this, &flyingPiece ]() {
+		this->removeChild( flyingPiece );
+	} );
 }
