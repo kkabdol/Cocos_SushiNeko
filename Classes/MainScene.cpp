@@ -297,7 +297,7 @@ void MainScene::stepTower()
 	currentPiece->setPosition( currentPiece->getPosition() + Vec2( 0.0f, currentPiece->getSpriteHeight() / 2.0f * cNumberOfSuchi ) );
 
 	// 3. Increase its z-order by one
-	currentPiece->setZOrder( currentPiece->getZOrder() + 1 );
+	currentPiece->setLocalZOrder( currentPiece->getLocalZOrder() + 1 );
 
 	// 4. Randomize its obstacle
 	this->lastObstacleSide = getSideForObstacle( this->lastObstacleSide );
@@ -358,7 +358,7 @@ void MainScene::triggerGameOver()
 	cocos2d::ui::Text* gameOverScoreLabel = mat->getChildByName<cocos2d::ui::Text*>( "gameOverScoreLabel" );
 
 	// set the score label to the user's score
-	gameOverScoreLabel->setString( std::to_string( this->score ) );
+	gameOverScoreLabel->setString( cocos2d::StringUtils::toString( this->score ) );
 
 	// load and run the game over animation	
 	cocostudio::timeline::ActionTimeline* gameOverTimeline = CSLoader::createTimeline( "MainScene.csb" );
@@ -411,7 +411,7 @@ void MainScene::setScore( int score )
 	this->score = score;
 
 	// update the score label
-	this->scoreLabel->setString( std::to_string( this->score ) );
+	this->scoreLabel->setString( cocos2d::StringUtils::toString( this->score ) );
 }
 
 void MainScene::setTimeLeft( float timeLeft )
